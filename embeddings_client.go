@@ -24,21 +24,33 @@ import (
 // EmbeddingsClient contains the methods for the Embeddings group.
 // Don't use this type directly, use NewEmbeddingsClient() instead.
 type EmbeddingsClient struct {
+	endpoint string
+	apiKey   *APIKeyClient
 	internal *arm.Client
 }
 
 // NewEmbeddingsClient creates a new instance of EmbeddingsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewEmbeddingsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*EmbeddingsClient, error) {
+func NewEmbeddingsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*EmbeddingsClient, error) {
 	cl, err := arm.NewClient(moduleName+".EmbeddingsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &EmbeddingsClient{
+		endpoint: endpoint,
 		internal: cl,
 	}
 	return client, nil
+}
+
+// NewEmbeddingsClientFromAPIKey creates a new instance of EmbeddingsClient with the specified values.
+//   - apiKey - used to authorize requests.
+func NewEmbeddingsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*EmbeddingsClient, error) {
+	return &EmbeddingsClient{
+		endpoint: endpoint,
+		apiKey:   NewAPIKeyClient(apiKey, options),
+	}, nil
 }
 
 // Create - Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
@@ -52,7 +64,7 @@ func (client *EmbeddingsClient) Create(ctx context.Context, deploymentID string,
 	if err != nil {
 		return EmbeddingsClientCreateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	resp, err := getPipeline(client.apiKey, client.internal).Do(req)
 	if err != nil {
 		return EmbeddingsClientCreateResponse{}, err
 	}
@@ -65,7 +77,7 @@ func (client *EmbeddingsClient) Create(ctx context.Context, deploymentID string,
 // createCreateRequest creates the Create request.
 func (client *EmbeddingsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema, options *EmbeddingsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
-	host = strings.ReplaceAll(host, "{endpoint}", endpoint)
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/embeddings"
 	if deploymentID == "" {
 		return nil, errors.New("parameter deploymentID cannot be empty")

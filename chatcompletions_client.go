@@ -24,21 +24,33 @@ import (
 // ChatCompletionsClient contains the methods for the ChatCompletions group.
 // Don't use this type directly, use NewChatCompletionsClient() instead.
 type ChatCompletionsClient struct {
+	endpoint string
+	apiKey   *APIKeyClient
 	internal *arm.Client
 }
 
 // NewChatCompletionsClient creates a new instance of ChatCompletionsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewChatCompletionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ChatCompletionsClient, error) {
+func NewChatCompletionsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ChatCompletionsClient, error) {
 	cl, err := arm.NewClient(moduleName+".ChatCompletionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &ChatCompletionsClient{
+		endpoint: endpoint,
 		internal: cl,
 	}
 	return client, nil
+}
+
+// NewChatCompletionsClientFromAPIKey creates a new instance of ChatCompletionsClient with the specified values.
+//   - apiKey - used to authorize requests.
+func NewChatCompletionsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*ChatCompletionsClient, error) {
+	return &ChatCompletionsClient{
+		endpoint: endpoint,
+		apiKey:   NewAPIKeyClient(apiKey, options),
+	}, nil
 }
 
 // Create - Creates a completion for the chat message
@@ -51,7 +63,7 @@ func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID st
 	if err != nil {
 		return ChatCompletionsClientCreateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	resp, err := getPipeline(client.apiKey, client.internal).Do(req)
 	if err != nil {
 		return ChatCompletionsClientCreateResponse{}, err
 	}
@@ -64,7 +76,7 @@ func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID st
 // createCreateRequest creates the Create request.
 func (client *ChatCompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema, options *ChatCompletionsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
-	host = strings.ReplaceAll(host, "{endpoint}", endpoint)
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/chat/completions"
 	if deploymentID == "" {
 		return nil, errors.New("parameter deploymentID cannot be empty")

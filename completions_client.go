@@ -24,21 +24,33 @@ import (
 // CompletionsClient contains the methods for the Completions group.
 // Don't use this type directly, use NewCompletionsClient() instead.
 type CompletionsClient struct {
+	endpoint string
+	apiKey   *APIKeyClient
 	internal *arm.Client
 }
 
 // NewCompletionsClient creates a new instance of CompletionsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewCompletionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*CompletionsClient, error) {
+func NewCompletionsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*CompletionsClient, error) {
 	cl, err := arm.NewClient(moduleName+".CompletionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &CompletionsClient{
+		endpoint: endpoint,
 		internal: cl,
 	}
 	return client, nil
+}
+
+// NewCompletionsClientFromAPIKey creates a new instance of CompletionsClient with the specified values.
+//   - apiKey - used to authorize requests.
+func NewCompletionsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*CompletionsClient, error) {
+	return &CompletionsClient{
+		endpoint: endpoint,
+		apiKey:   NewAPIKeyClient(apiKey, options),
+	}, nil
 }
 
 // Create - Creates a completion for the provided prompt, parameters and chosen model.
@@ -51,7 +63,7 @@ func (client *CompletionsClient) Create(ctx context.Context, deploymentID string
 	if err != nil {
 		return CompletionsClientCreateResponse{}, err
 	}
-	resp, err := client.internal.Pipeline().Do(req)
+	resp, err := getPipeline(client.apiKey, client.internal).Do(req)
 	if err != nil {
 		return CompletionsClientCreateResponse{}, err
 	}
@@ -64,7 +76,7 @@ func (client *CompletionsClient) Create(ctx context.Context, deploymentID string
 // createCreateRequest creates the Create request.
 func (client *CompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema, options *CompletionsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
-	host = strings.ReplaceAll(host, "{endpoint}", endpoint)
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/completions"
 	if deploymentID == "" {
 		return nil, errors.New("parameter deploymentID cannot be empty")

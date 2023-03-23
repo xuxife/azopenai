@@ -18,34 +18,61 @@ import (
 type ClientFactory struct {
 	credential azcore.TokenCredential
 	options    *arm.ClientOptions
+	endpoint   string
+	apiKey     string
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
+//   - endpoint - the endpoint to request.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	_, err := arm.NewClient(moduleName+".ClientFactory", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
+		endpoint:   endpoint,
 		credential: credential,
 		options:    options.Clone(),
 	}, nil
 }
 
+// NewClientFactoryFromAPIKey creates a new instance of ClientFactory with the specified values.
+// The parameter values will be propagated to any client created from this factory.
+//   - endpoint - the endpoint to request.
+//   - apiKey - used to authorize requests.
+func NewClientFactoryFromAPIKey(endpoint string, apiKey string) (*ClientFactory, error) {
+	return &ClientFactory{
+		endpoint: endpoint,
+		apiKey:   apiKey,
+	}, nil
+}
+
 func (c *ClientFactory) NewCompletionsClient() *CompletionsClient {
-	subClient, _ := NewCompletionsClient(c.credential, c.options)
+	if c.apiKey != "" {
+		subClient, _ := NewCompletionsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		return subClient
+	}
+	subClient, _ := NewCompletionsClient(c.endpoint, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewEmbeddingsClient() *EmbeddingsClient {
-	subClient, _ := NewEmbeddingsClient(c.credential, c.options)
+	if c.apiKey != "" {
+		subClient, _ := NewEmbeddingsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		return subClient
+	}
+	subClient, _ := NewEmbeddingsClient(c.endpoint, c.credential, c.options)
 	return subClient
 }
 
 func (c *ClientFactory) NewChatCompletionsClient() *ChatCompletionsClient {
-	subClient, _ := NewChatCompletionsClient(c.credential, c.options)
+	if c.apiKey != "" {
+		subClient, _ := NewChatCompletionsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		return subClient
+	}
+	subClient, _ := NewChatCompletionsClient(c.endpoint, c.credential, c.options)
 	return subClient
 }
