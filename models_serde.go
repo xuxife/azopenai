@@ -212,6 +212,7 @@ func (p ChatCompletionsChoice) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "finish_reason", p.FinishReason)
 	populate(objectMap, "index", p.Index)
 	populate(objectMap, "message", p.Message)
+	populate(objectMap, "delta", p.Delta)
 	return json.Marshal(objectMap)
 }
 
@@ -232,6 +233,9 @@ func (p *ChatCompletionsChoice) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "message":
 			err = unpopulate(val, "Message", &p.Message)
+			delete(rawMsg, key)
+		case "delta":
+			err = unpopulate(val, "Delta", &p.Delta)
 			delete(rawMsg, key)
 		}
 		if err != nil {

@@ -13,6 +13,11 @@ type ChatCompletionsClientCreateResponse struct {
 	ChatCompletions
 }
 
+// ChatCompletionsClientCreateStreamResponse contains the response from method ChatCompletionsClient.CreateStream.
+type ChatCompletionsClientCreateStreamResponse struct {
+	ChatCompletions *StreamReader[ChatCompletions]
+}
+
 // CompletionsClientCreateResponse contains the response from method CompletionsClient.Create.
 type CompletionsClientCreateResponse struct {
 	Completions

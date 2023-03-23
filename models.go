@@ -86,6 +86,7 @@ type ChatCompletionsChoice struct {
 	FinishReason *string                       `json:"finish_reason,omitempty"`
 	Index        *int32                        `json:"index,omitempty"`
 	Message      *ChatCompletionsChoiceMessage `json:"message,omitempty"`
+	Delta        *ChatCompletionsChoiceMessage `json:"delta,omitempty"` // for stream
 }
 
 type ChatCompletions struct {

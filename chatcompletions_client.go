@@ -19,6 +19,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 // ChatCompletionsClient contains the methods for the ChatCompletions group.
@@ -73,6 +74,27 @@ func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID st
 	return client.createHandleResponse(resp)
 }
 
+// CreateStream - Creates a completion for the chat message in stream
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-03-15-preview
+//   - options - ChatCompletionsClientCreateOptions contains the optional parameters for the ChatCompletionsClient.CreateStream method.
+func (client *ChatCompletionsClient) CreateStream(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (ChatCompletionsClientCreateStreamResponse, error) {
+	body.Stream = to.Ptr(true) // ensure the request has { "stream": true }
+	req, err := client.createCreateRequest(ctx, deploymentID, body, options)
+	if err != nil {
+		return ChatCompletionsClientCreateStreamResponse{}, err
+	}
+	resp, err := getPipeline(client.apiKey, client.internal).Do(req)
+	if err != nil {
+		return ChatCompletionsClientCreateStreamResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return ChatCompletionsClientCreateStreamResponse{}, runtime.NewResponseError(resp)
+	}
+	return client.createHandlerResponseStream(resp)
+}
+
 // createCreateRequest creates the Create request.
 func (client *ChatCompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
@@ -100,4 +122,13 @@ func (client *ChatCompletionsClient) createHandleResponse(resp *http.Response) (
 		return ChatCompletionsClientCreateResponse{}, err
 	}
 	return result, nil
+}
+
+// createHandlerResponseStream handles the CreateStream response.
+func (client *ChatCompletionsClient) createHandlerResponseStream(resp *http.Response) (ChatCompletionsClientCreateStreamResponse, error) {
+	return ChatCompletionsClientCreateStreamResponse{
+		ChatCompletions: &StreamReader[ChatCompletions]{
+			Reader: resp.Body,
+		},
+	}, nil
 }
