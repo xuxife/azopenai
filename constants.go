@@ -9,7 +9,6 @@
 package azopenai
 
 const (
-	endpoint      = ""
 	moduleName    = "azopenai"
 	moduleVersion = "v0.0.1"
 )
