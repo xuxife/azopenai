@@ -34,7 +34,7 @@ type ChatCompletionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewChatCompletionsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ChatCompletionsClient, error) {
-	cl, err := arm.NewClient(moduleName+".ChatCompletionsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".ChatCompletionsClient", moduleVersion, credential, EnableStreamArmPolicy(options))
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func NewChatCompletionsClient(endpoint string, credential azcore.TokenCredential
 func NewChatCompletionsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*ChatCompletionsClient, error) {
 	return &ChatCompletionsClient{
 		endpoint: endpoint,
-		apiKey:   NewAPIKeyClient(apiKey, options),
+		apiKey:   NewAPIKeyClient(apiKey, EnableStream(options)),
 	}, nil
 }
 
@@ -80,8 +80,7 @@ func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID st
 // Generated from API version 2023-03-15-preview
 //   - options - ChatCompletionsClientCreateOptions contains the optional parameters for the ChatCompletionsClient.CreateStream method.
 func (client *ChatCompletionsClient) CreateStream(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (ChatCompletionsClientCreateStreamResponse, error) {
-	body.Stream = to.Ptr(true) // ensure the request has { "stream": true }
-	req, err := client.createCreateRequest(ctx, deploymentID, body, options)
+	req, err := client.createCreateRequestStream(ctx, deploymentID, body, options)
 	if err != nil {
 		return ChatCompletionsClientCreateStreamResponse{}, err
 	}
@@ -122,6 +121,30 @@ func (client *ChatCompletionsClient) createHandleResponse(resp *http.Response) (
 		return ChatCompletionsClientCreateResponse{}, err
 	}
 	return result, nil
+}
+
+// createCreateRequestStream creates the CreateStream request.
+func (client *ChatCompletionsClient) createCreateRequestStream(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (*policy.Request, error) {
+	body.Stream = to.Ptr(true) // ensure the request has { "stream": true }
+
+	host := "https://{endpoint}/openai"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	urlPath := "/deployments/{deployment-id}/chat/completions"
+	if deploymentID == "" {
+		return nil, errors.New("parameter deploymentID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{deployment-id}", url.PathEscape(deploymentID))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2023-03-15-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"text/event-stream"}
+	req.Raw().Header["Cache-Control"] = []string{"no-cache"}
+	req.Raw().Header["Connection"] = []string{"keep-alive"}
+	return req, runtime.MarshalAsJSON(req, body)
 }
 
 // createHandlerResponseStream handles the CreateStream response.

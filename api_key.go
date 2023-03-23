@@ -30,9 +30,6 @@ func NewAPIKeyClient(apiKey string, options *azpolicy.ClientOptions) *APIKeyClie
 func NewAPIKeyPipeline(module, version string, apiKey string, plOpts runtime.PipelineOptions, options *azpolicy.ClientOptions) runtime.Pipeline {
 	authPolicy := APIKeyPolicy(apiKey)
 	plOpts.PerRetry = append(plOpts.PerRetry, authPolicy)
-	if plOpts.APIVersion.Name == "" {
-		plOpts.APIVersion.Name = "api-version"
-	}
 	return runtime.NewPipeline(module, version, plOpts, options)
 }
 

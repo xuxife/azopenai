@@ -11,6 +11,7 @@ package azopenai
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 )
 
 // ClientFactory is a client factory used to create any client in this module.
@@ -52,27 +53,45 @@ func NewClientFactoryFromAPIKey(endpoint string, apiKey string) (*ClientFactory,
 
 func (c *ClientFactory) NewCompletionsClient() *CompletionsClient {
 	if c.apiKey != "" {
-		subClient, _ := NewCompletionsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		subClient, _ := NewCompletionsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
 		return subClient
 	}
-	subClient, _ := NewCompletionsClient(c.endpoint, c.credential, c.options)
+	subClient, _ := NewCompletionsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
 	return subClient
 }
 
 func (c *ClientFactory) NewEmbeddingsClient() *EmbeddingsClient {
 	if c.apiKey != "" {
-		subClient, _ := NewEmbeddingsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		subClient, _ := NewEmbeddingsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
 		return subClient
 	}
-	subClient, _ := NewEmbeddingsClient(c.endpoint, c.credential, c.options)
+	subClient, _ := NewEmbeddingsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
 	return subClient
 }
 
 func (c *ClientFactory) NewChatCompletionsClient() *ChatCompletionsClient {
 	if c.apiKey != "" {
-		subClient, _ := NewChatCompletionsClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
+		subClient, _ := NewChatCompletionsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
 		return subClient
 	}
-	subClient, _ := NewChatCompletionsClient(c.endpoint, c.credential, c.options)
+	subClient, _ := NewChatCompletionsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
 	return subClient
+}
+
+// EnableStream is a helper function to enable streaming on the policy client options.
+func EnableStream(options *policy.ClientOptions) *policy.ClientOptions {
+	op := &policy.ClientOptions{}
+	if options != nil {
+		op = options
+	}
+	op.EnableStream = true
+	return op
+}
+
+func EnableStreamArmPolicy(options *arm.ClientOptions) *arm.ClientOptions {
+	op := options.Clone()
+	if op != nil {
+		op.EnableStream = true
+	}
+	return op
 }

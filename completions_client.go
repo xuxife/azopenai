@@ -33,7 +33,7 @@ type CompletionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewCompletionsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*CompletionsClient, error) {
-	cl, err := arm.NewClient(moduleName+".CompletionsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName+".CompletionsClient", moduleVersion, credential, EnableStreamArmPolicy(options))
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func NewCompletionsClient(endpoint string, credential azcore.TokenCredential, op
 func NewCompletionsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*CompletionsClient, error) {
 	return &CompletionsClient{
 		endpoint: endpoint,
-		apiKey:   NewAPIKeyClient(apiKey, options),
+		apiKey:   NewAPIKeyClient(apiKey, EnableStream(options)),
 	}, nil
 }
 
