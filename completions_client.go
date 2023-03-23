@@ -58,7 +58,7 @@ func NewCompletionsClientFromAPIKey(endpoint string, apiKey string, options *pol
 //
 // Generated from API version 2023-03-15-preview
 //   - options - CompletionsClientCreateOptions contains the optional parameters for the CompletionsClient.Create method.
-func (client *CompletionsClient) Create(ctx context.Context, deploymentID string, body Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema, options *CompletionsClientCreateOptions) (CompletionsClientCreateResponse, error) {
+func (client *CompletionsClient) Create(ctx context.Context, deploymentID string, body CompletionsCreateParameters, options *CompletionsClientCreateOptions) (CompletionsClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, deploymentID, body, options)
 	if err != nil {
 		return CompletionsClientCreateResponse{}, err
@@ -74,7 +74,7 @@ func (client *CompletionsClient) Create(ctx context.Context, deploymentID string
 }
 
 // createCreateRequest creates the Create request.
-func (client *CompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema, options *CompletionsClientCreateOptions) (*policy.Request, error) {
+func (client *CompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body CompletionsCreateParameters, options *CompletionsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/completions"
@@ -99,7 +99,7 @@ func (client *CompletionsClient) createHandleResponse(resp *http.Response) (Comp
 	if val := resp.Header.Get("apim-request-id"); val != "" {
 		result.ApimRequestID = &val
 	}
-	if err := runtime.UnmarshalAsJSON(resp, &result.PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchema); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Completions); err != nil {
 		return CompletionsClientCreateResponse{}, err
 	}
 	return result, nil

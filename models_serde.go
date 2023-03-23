@@ -82,8 +82,8 @@ func (e *ErrorResponseError) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema.
-func (p Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type EmbeddingsCreateParameters.
+func (p EmbeddingsCreateParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "input", p.Input)
 	populate(objectMap, "input_type", p.InputType)
@@ -97,8 +97,8 @@ func (p Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentAppli
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema.
-func (p *Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type EmbeddingsCreateParameters.
+func (p *EmbeddingsCreateParameters) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -136,8 +136,8 @@ func (p *Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentAppl
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchema.
-func (p Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Embeddings.
+func (p Embeddings) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "data", p.Data)
 	populate(objectMap, "model", p.Model)
@@ -146,8 +146,8 @@ func (p Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentAppl
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchema.
-func (p *Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Embeddings.
+func (p *Embeddings) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -175,16 +175,16 @@ func (p *Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths18Tiy9VDeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p Paths18Tiy9VDeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type EmbeddingsUsage.
+func (p EmbeddingsUsage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "prompt_tokens", p.PromptTokens)
 	populate(objectMap, "total_tokens", p.TotalTokens)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths18Tiy9VDeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p *Paths18Tiy9VDeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type EmbeddingsUsage.
+func (p *EmbeddingsUsage) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -206,8 +206,8 @@ func (p *Paths18Tiy9VDeploymentsDeploymentIDEmbeddingsPostResponses200ContentApp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesChoicesItems.
-func (p Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesChoicesItems) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsChoice.
+func (p ChatCompletionsChoice) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "finish_reason", p.FinishReason)
 	populate(objectMap, "index", p.Index)
@@ -215,8 +215,8 @@ func (p Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200Conten
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesChoicesItems.
-func (p *Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesChoicesItems) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsChoice.
+func (p *ChatCompletionsChoice) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -241,8 +241,8 @@ func (p *Paths1G4Sf52DeploymentsDeploymentIDChatCompletionsPostResponses200Conte
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchema.
-func (p Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletions.
+func (p ChatCompletions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "choices", p.Choices)
 	populateTimeUnix(objectMap, "created", p.Created)
@@ -253,8 +253,8 @@ func (p Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200Content
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchema.
-func (p *Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletions.
+func (p *ChatCompletions) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -288,11 +288,11 @@ func (p *Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200Conten
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema.
-func (p Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsCreateParameters.
+func (p ChatCompletionsCreateParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "frequency_penalty", p.FrequencyPenalty)
-	populate(objectMap, "logit_bias", &p.LogitBias)
+	populate(objectMap, "logit_bias", p.LogitBias)
 	populate(objectMap, "max_tokens", p.MaxTokens)
 	populate(objectMap, "messages", p.Messages)
 	populate(objectMap, "n", p.N)
@@ -305,8 +305,8 @@ func (p Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContent
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema.
-func (p *Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsCreateParameters.
+func (p *ChatCompletionsCreateParameters) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -355,8 +355,8 @@ func (p *Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyConten
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type CompletionsUsage.
+func (p CompletionsUsage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "completion_tokens", p.CompletionTokens)
 	populate(objectMap, "prompt_tokens", p.PromptTokens)
@@ -364,8 +364,8 @@ func (p Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentApp
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p *Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsUsage.
+func (p *CompletionsUsage) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -390,15 +390,15 @@ func (p *Paths1Phq6SvDeploymentsDeploymentIDCompletionsPostResponses200ContentAp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema.
-func (p Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type CompletionsCreateParameters.
+func (p CompletionsCreateParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "best_of", p.BestOf)
 	populate(objectMap, "cache_level", p.CacheLevel)
 	populate(objectMap, "completion_config", p.CompletionConfig)
 	populate(objectMap, "echo", p.Echo)
 	populate(objectMap, "frequency_penalty", p.FrequencyPenalty)
-	populate(objectMap, "logit_bias", &p.LogitBias)
+	populate(objectMap, "logit_bias", p.LogitBias)
 	populate(objectMap, "logprobs", p.Logprobs)
 	populate(objectMap, "max_tokens", p.MaxTokens)
 	populate(objectMap, "model", p.Model)
@@ -414,8 +414,8 @@ func (p Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentAppl
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema.
-func (p *Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsCreateParameters.
+func (p *CompletionsCreateParameters) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -485,8 +485,8 @@ func (p *Paths1Vtxb06DeploymentsDeploymentIDCompletionsPostRequestbodyContentApp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsUsage.
+func (p ChatCompletionsUsage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "completion_tokens", p.CompletionTokens)
 	populate(objectMap, "prompt_tokens", p.PromptTokens)
@@ -494,8 +494,8 @@ func (p Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200Conten
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage.
-func (p *Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchemaPropertiesUsage) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsUsage.
+func (p *ChatCompletionsUsage) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -520,8 +520,8 @@ func (p *Paths1XcvledDeploymentsDeploymentIDChatCompletionsPostResponses200Conte
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesDataItems.
-func (p Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesDataItems) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type EmbeddingsData.
+func (p EmbeddingsData) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "embedding", p.Embedding)
 	populate(objectMap, "index", p.Index)
@@ -529,8 +529,8 @@ func (p Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentAppl
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesDataItems.
-func (p *Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchemaPropertiesDataItems) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type EmbeddingsData.
+func (p *EmbeddingsData) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -555,8 +555,18 @@ func (p *Paths1Xmf2L5DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchema.
-func (p PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchema) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsStop.
+func (p ChatCompletionsStop) MarshalJSON() ([]byte, error) {
+	return json.Marshal(oneOf(p.Text, p.Sequences))
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsStop.
+func (p *ChatCompletionsStop) UnmarshalJSON(data []byte) error {
+	return unmarshalOneOf(data, &p.Text, &p.Sequences)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Completions.
+func (p Completions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "choices", p.Choices)
 	populate(objectMap, "created", p.Created)
@@ -567,8 +577,8 @@ func (p PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentAppl
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchema.
-func (p *PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApplicationJSONSchema) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Completions.
+func (p *Completions) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -602,8 +612,8 @@ func (p *PathsMaorw9DeploymentsDeploymentIDCompletionsPostResponses200ContentApp
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Post200ApplicationJSONPropertiesItemsItem.
-func (p Post200ApplicationJSONPropertiesItemsItem) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type CompletionsChoice.
+func (p CompletionsChoice) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "finish_reason", p.FinishReason)
 	populate(objectMap, "index", p.Index)
@@ -612,8 +622,8 @@ func (p Post200ApplicationJSONPropertiesItemsItem) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Post200ApplicationJSONPropertiesItemsItem.
-func (p *Post200ApplicationJSONPropertiesItemsItem) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsChoice.
+func (p *CompletionsChoice) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -641,8 +651,18 @@ func (p *Post200ApplicationJSONPropertiesItemsItem) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PostContentSchemaMessagesItem.
-func (p PostContentSchemaMessagesItem) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type EmbeddingsInput.
+func (p EmbeddingsInput) MarshalJSON() ([]byte, error) {
+	return json.Marshal(oneOf(p.Text, p.Sequences))
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type EmbeddingsInput.
+func (p *EmbeddingsInput) UnmarshalJSON(data []byte) error {
+	return unmarshalOneOf(data, &p.Text, &p.Sequences)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsMessage.
+func (p ChatCompletionsMessage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "content", p.Content)
 	populate(objectMap, "name", p.Name)
@@ -650,8 +670,8 @@ func (p PostContentSchemaMessagesItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PostContentSchemaMessagesItem.
-func (p *PostContentSchemaMessagesItem) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsMessage.
+func (p *ChatCompletionsMessage) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -676,8 +696,8 @@ func (p *PostContentSchemaMessagesItem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs.
-func (p PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type CompletionsChoiceLogprobs.
+func (p CompletionsChoiceLogprobs) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "text_offset", p.TextOffset)
 	populate(objectMap, "token_logprobs", p.TokenLogprobs)
@@ -686,8 +706,8 @@ func (p PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs) Marshal
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs.
-func (p *PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsChoiceLogprobs.
+func (p *CompletionsChoiceLogprobs) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -715,16 +735,16 @@ func (p *PostResponses200ContentApplicationJSONSchemaChoicesItemLogprobs) Unmars
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PostResponses200ContentApplicationJSONSchemaChoicesItemMessage.
-func (p PostResponses200ContentApplicationJSONSchemaChoicesItemMessage) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ChatCompletionsChoiceMessage.
+func (p ChatCompletionsChoiceMessage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "content", p.Content)
 	populate(objectMap, "role", p.Role)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PostResponses200ContentApplicationJSONSchemaChoicesItemMessage.
-func (p *PostResponses200ContentApplicationJSONSchemaChoicesItemMessage) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ChatCompletionsChoiceMessage.
+func (p *ChatCompletionsChoiceMessage) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -746,6 +766,26 @@ func (p *PostResponses200ContentApplicationJSONSchemaChoicesItemMessage) Unmarsh
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CompletionsPrompt.
+func (p CompletionsPrompt) MarshalJSON() ([]byte, error) {
+	return json.Marshal(oneOf(p.Text, p.Sequences))
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsPrompt.
+func (p *CompletionsPrompt) UnmarshalJSON(data []byte) error {
+	return unmarshalOneOf(data, &p.Text, &p.Sequences)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CompletionsStop.
+func (p CompletionsStop) MarshalJSON() ([]byte, error) {
+	return json.Marshal(oneOf(p.Text, p.Sequences))
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CompletionsStop.
+func (p *CompletionsStop) UnmarshalJSON(data []byte) error {
+	return unmarshalOneOf(data, &p.Text, &p.Sequences)
+}
+
 func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
@@ -764,4 +804,27 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	return nil
+}
+
+func oneOf[T, M any](single T, multiple []M) any {
+	if len(multiple) == 0 {
+		return single
+	}
+	return multiple
+}
+
+func unmarshalOneOf[T, M any](data json.RawMessage, single *T, multiple *[]M) error {
+	errSingle := json.Unmarshal(data, single)
+	if errSingle == nil {
+		return nil
+	}
+	errMultiple := json.Unmarshal(data, multiple)
+	if errMultiple == nil {
+		return nil
+	}
+	return fmt.Errorf(
+		"unmarshalling type %T: %v and unmarshalling type %T: %v",
+		single, errSingle,
+		multiple, errMultiple,
+	)
 }

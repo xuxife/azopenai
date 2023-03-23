@@ -59,7 +59,7 @@ func NewEmbeddingsClientFromAPIKey(endpoint string, apiKey string, options *poli
 // Generated from API version 2023-03-15-preview
 //   - deploymentID - The deployment id of the model which was deployed.
 //   - options - EmbeddingsClientCreateOptions contains the optional parameters for the EmbeddingsClient.Create method.
-func (client *EmbeddingsClient) Create(ctx context.Context, deploymentID string, body Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema, options *EmbeddingsClientCreateOptions) (EmbeddingsClientCreateResponse, error) {
+func (client *EmbeddingsClient) Create(ctx context.Context, deploymentID string, body EmbeddingsCreateParameters, options *EmbeddingsClientCreateOptions) (EmbeddingsClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, deploymentID, body, options)
 	if err != nil {
 		return EmbeddingsClientCreateResponse{}, err
@@ -75,7 +75,7 @@ func (client *EmbeddingsClient) Create(ctx context.Context, deploymentID string,
 }
 
 // createCreateRequest creates the Create request.
-func (client *EmbeddingsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths13PiqocDeploymentsDeploymentIDEmbeddingsPostRequestbodyContentApplicationJSONSchema, options *EmbeddingsClientCreateOptions) (*policy.Request, error) {
+func (client *EmbeddingsClient) createCreateRequest(ctx context.Context, deploymentID string, body EmbeddingsCreateParameters, options *EmbeddingsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/embeddings"
@@ -97,7 +97,7 @@ func (client *EmbeddingsClient) createCreateRequest(ctx context.Context, deploym
 // createHandleResponse handles the Create response.
 func (client *EmbeddingsClient) createHandleResponse(resp *http.Response) (EmbeddingsClientCreateResponse, error) {
 	result := EmbeddingsClientCreateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Paths15Cw454DeploymentsDeploymentIDEmbeddingsPostResponses200ContentApplicationJSONSchema); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Embeddings); err != nil {
 		return EmbeddingsClientCreateResponse{}, err
 	}
 	return result, nil

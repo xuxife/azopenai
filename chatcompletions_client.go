@@ -58,7 +58,7 @@ func NewChatCompletionsClientFromAPIKey(endpoint string, apiKey string, options 
 //
 // Generated from API version 2023-03-15-preview
 //   - options - ChatCompletionsClientCreateOptions contains the optional parameters for the ChatCompletionsClient.Create method.
-func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID string, body Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema, options *ChatCompletionsClientCreateOptions) (ChatCompletionsClientCreateResponse, error) {
+func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (ChatCompletionsClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, deploymentID, body, options)
 	if err != nil {
 		return ChatCompletionsClientCreateResponse{}, err
@@ -74,7 +74,7 @@ func (client *ChatCompletionsClient) Create(ctx context.Context, deploymentID st
 }
 
 // createCreateRequest creates the Create request.
-func (client *ChatCompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body Paths1L1E8YpDeploymentsDeploymentIDChatCompletionsPostRequestbodyContentApplicationJSONSchema, options *ChatCompletionsClientCreateOptions) (*policy.Request, error) {
+func (client *ChatCompletionsClient) createCreateRequest(ctx context.Context, deploymentID string, body ChatCompletionsCreateParameters, options *ChatCompletionsClientCreateOptions) (*policy.Request, error) {
 	host := "https://{endpoint}/openai"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/deployments/{deployment-id}/chat/completions"
@@ -96,7 +96,7 @@ func (client *ChatCompletionsClient) createCreateRequest(ctx context.Context, de
 // createHandleResponse handles the Create response.
 func (client *ChatCompletionsClient) createHandleResponse(resp *http.Response) (ChatCompletionsClientCreateResponse, error) {
 	result := ChatCompletionsClientCreateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Paths1H0F83DeploymentsDeploymentIDChatCompletionsPostResponses200ContentApplicationJSONSchema); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.ChatCompletions); err != nil {
 		return ChatCompletionsClientCreateResponse{}, err
 	}
 	return result, nil

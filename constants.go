@@ -14,38 +14,20 @@ const (
 	moduleVersion = "v0.0.1"
 )
 
-// Post200ApplicationJSONPropertiesItemsMessageRole - The role of the author of this message.
-type Post200ApplicationJSONPropertiesItemsMessageRole string
+// ChatCompletionsMessageRole - The role of the author of this message.
+type ChatCompletionsMessageRole string
 
 const (
-	Post200ApplicationJSONPropertiesItemsMessageRoleAssistant Post200ApplicationJSONPropertiesItemsMessageRole = "assistant"
-	Post200ApplicationJSONPropertiesItemsMessageRoleSystem    Post200ApplicationJSONPropertiesItemsMessageRole = "system"
-	Post200ApplicationJSONPropertiesItemsMessageRoleUser      Post200ApplicationJSONPropertiesItemsMessageRole = "user"
+	ChatCompletionsMessageRoleAssistant ChatCompletionsMessageRole = "assistant"
+	ChatCompletionsMessageRoleSystem    ChatCompletionsMessageRole = "system"
+	ChatCompletionsMessageRoleUser      ChatCompletionsMessageRole = "user"
 )
 
-// PossiblePost200ApplicationJSONPropertiesItemsMessageRoleValues returns the possible values for the Post200ApplicationJSONPropertiesItemsMessageRole const type.
-func PossiblePost200ApplicationJSONPropertiesItemsMessageRoleValues() []Post200ApplicationJSONPropertiesItemsMessageRole {
-	return []Post200ApplicationJSONPropertiesItemsMessageRole{
-		Post200ApplicationJSONPropertiesItemsMessageRoleAssistant,
-		Post200ApplicationJSONPropertiesItemsMessageRoleSystem,
-		Post200ApplicationJSONPropertiesItemsMessageRoleUser,
-	}
-}
-
-// PostRequestBodyContentApplicationJSONSchemaMessagesItemRole - The role of the author of this message.
-type PostRequestBodyContentApplicationJSONSchemaMessagesItemRole string
-
-const (
-	PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleAssistant PostRequestBodyContentApplicationJSONSchemaMessagesItemRole = "assistant"
-	PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleSystem    PostRequestBodyContentApplicationJSONSchemaMessagesItemRole = "system"
-	PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleUser      PostRequestBodyContentApplicationJSONSchemaMessagesItemRole = "user"
-)
-
-// PossiblePostRequestBodyContentApplicationJSONSchemaMessagesItemRoleValues returns the possible values for the PostRequestBodyContentApplicationJSONSchemaMessagesItemRole const type.
-func PossiblePostRequestBodyContentApplicationJSONSchemaMessagesItemRoleValues() []PostRequestBodyContentApplicationJSONSchemaMessagesItemRole {
-	return []PostRequestBodyContentApplicationJSONSchemaMessagesItemRole{
-		PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleAssistant,
-		PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleSystem,
-		PostRequestBodyContentApplicationJSONSchemaMessagesItemRoleUser,
+// PossibleChatCompletionsMessageRoleValues returns the possible values for the ChatCompletionsMessageRole const type.
+func PossibleChatCompletionsMessageRoleValues() []ChatCompletionsMessageRole {
+	return []ChatCompletionsMessageRole{
+		ChatCompletionsMessageRoleAssistant,
+		ChatCompletionsMessageRoleSystem,
+		ChatCompletionsMessageRoleUser,
 	}
 }
