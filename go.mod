@@ -1,4 +1,4 @@
-module azopenai
+module github.com/xuxife/azopenai
 
 go 1.18
 
