@@ -19,6 +19,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 // CompletionsClient contains the methods for the Completions group.
@@ -33,7 +34,7 @@ type CompletionsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewCompletionsClient(endpoint string, credential azcore.TokenCredential, options *arm.ClientOptions) (*CompletionsClient, error) {
-	cl, err := arm.NewClient(moduleName+".CompletionsClient", moduleVersion, credential, EnableStreamArmPolicy(options))
+	cl, err := arm.NewClient(moduleName+".CompletionsClient", moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +50,7 @@ func NewCompletionsClient(endpoint string, credential azcore.TokenCredential, op
 func NewCompletionsClientFromAPIKey(endpoint string, apiKey string, options *policy.ClientOptions) (*CompletionsClient, error) {
 	return &CompletionsClient{
 		endpoint: endpoint,
-		apiKey:   NewAPIKeyClient(apiKey, EnableStream(options)),
+		apiKey:   NewAPIKeyClient(apiKey, options),
 	}, nil
 }
 
@@ -71,6 +72,27 @@ func (client *CompletionsClient) Create(ctx context.Context, deploymentID string
 		return CompletionsClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
+}
+
+// CreateStream - Creates a completion for the chat message in stream
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-03-15-preview
+//   - options - CompletionsClientCreateOptions contains the optional parameters for the CompletionsClient.CreateStream method.
+func (client *CompletionsClient) CreateStream(ctx context.Context, deploymentID string, body CompletionsCreateParameters, options *CompletionsClientCreateOptions) (CompletionsClientCreateStreamResponse, error) {
+	body.Stream = to.Ptr(true) // ensure the request has { "stream": true }
+	req, err := streamRequest(client.createCreateRequest(ctx, deploymentID, body, options))
+	if err != nil {
+		return CompletionsClientCreateStreamResponse{}, err
+	}
+	resp, err := getPipeline(client.apiKey, client.internal).Do(req)
+	if err != nil {
+		return CompletionsClientCreateStreamResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return CompletionsClientCreateStreamResponse{}, runtime.NewResponseError(resp)
+	}
+	return client.createHandlerResponseStream(resp)
 }
 
 // createCreateRequest creates the Create request.
@@ -103,4 +125,13 @@ func (client *CompletionsClient) createHandleResponse(resp *http.Response) (Comp
 		return CompletionsClientCreateResponse{}, err
 	}
 	return result, nil
+}
+
+// createHandlerResponseStream handles the CreateStream response.
+func (client *CompletionsClient) createHandlerResponseStream(resp *http.Response) (CompletionsClientCreateStreamResponse, error) {
+	return CompletionsClientCreateStreamResponse{
+		StreamReader: &StreamReader[Completions]{
+			Reader: resp.Body,
+		},
+	}, nil
 }

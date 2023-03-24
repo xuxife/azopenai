@@ -52,46 +52,26 @@ func NewClientFactoryFromAPIKey(endpoint string, apiKey string) (*ClientFactory,
 }
 
 func (c *ClientFactory) NewCompletionsClient() *CompletionsClient {
-	if c.apiKey != "" {
-		subClient, _ := NewCompletionsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
-		return subClient
-	}
-	subClient, _ := NewCompletionsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
-	return subClient
+	return createClient(c, NewCompletionsClient, NewCompletionsClientFromAPIKey)
 }
 
 func (c *ClientFactory) NewEmbeddingsClient() *EmbeddingsClient {
-	if c.apiKey != "" {
-		subClient, _ := NewEmbeddingsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
-		return subClient
-	}
-	subClient, _ := NewEmbeddingsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
-	return subClient
+	return createClient(c, NewEmbeddingsClient, NewEmbeddingsClientFromAPIKey)
 }
 
 func (c *ClientFactory) NewChatCompletionsClient() *ChatCompletionsClient {
+	return createClient(c, NewChatCompletionsClient, NewChatCompletionsClientFromAPIKey)
+}
+
+func createClient[T any](
+	c *ClientFactory,
+	newClient func(endpoint string, cred azcore.TokenCredential, options *arm.ClientOptions) (T, error),
+	newClientFromAPIKey func(endpoint string, apiKey string, options *policy.ClientOptions) (T, error),
+) T {
 	if c.apiKey != "" {
-		subClient, _ := NewChatCompletionsClientFromAPIKey(c.endpoint, c.apiKey, EnableStream(&c.options.ClientOptions))
+		subClient, _ := newClientFromAPIKey(c.endpoint, c.apiKey, &c.options.ClientOptions)
 		return subClient
 	}
-	subClient, _ := NewChatCompletionsClient(c.endpoint, c.credential, EnableStreamArmPolicy(c.options))
+	subClient, _ := newClient(c.endpoint, c.credential, c.options)
 	return subClient
-}
-
-// EnableStream is a helper function to enable streaming on the policy client options.
-func EnableStream(options *policy.ClientOptions) *policy.ClientOptions {
-	op := &policy.ClientOptions{}
-	if options != nil {
-		op = options
-	}
-	op.EnableStream = true
-	return op
-}
-
-func EnableStreamArmPolicy(options *arm.ClientOptions) *arm.ClientOptions {
-	op := options.Clone()
-	if op != nil {
-		op.EnableStream = true
-	}
-	return op
 }

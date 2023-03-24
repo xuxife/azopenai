@@ -15,7 +15,7 @@ type ChatCompletionsClientCreateResponse struct {
 
 // ChatCompletionsClientCreateStreamResponse contains the response from method ChatCompletionsClient.CreateStream.
 type ChatCompletionsClientCreateStreamResponse struct {
-	ChatCompletions *StreamReader[ChatCompletions]
+	*StreamReader[ChatCompletions]
 }
 
 // CompletionsClientCreateResponse contains the response from method CompletionsClient.Create.
@@ -23,6 +23,11 @@ type CompletionsClientCreateResponse struct {
 	Completions
 	// ApimRequestID contains the information returned from the apim-request-id header response.
 	ApimRequestID *string
+}
+
+// CompletionsClientCreateStreamResponse contains the response from method CompletionsClient.CreateStream.
+type CompletionsClientCreateStreamResponse struct {
+	*StreamReader[Completions]
 }
 
 // EmbeddingsClientCreateResponse contains the response from method EmbeddingsClient.Create.
